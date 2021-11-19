@@ -1,28 +1,27 @@
-namespace Template.Worker
+namespace Template.Worker;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+public class Worker : BackgroundService
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+    private ILogger<Worker> Log { get; }
 
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Logging;
-
-    public class Worker : BackgroundService
+    public Worker(ILogger<Worker> log)
     {
-        private ILogger<Worker> Log { get; }
+        Log = log;
+    }
 
-        public Worker(ILogger<Worker> log)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
         {
-            Log = log;
-        }
-
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                Log.LogInformation("Worker running at: {Time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
-            }
+            Log.LogInformation("Worker running at: {Time}", DateTimeOffset.Now);
+            await Task.Delay(1000, stoppingToken);
         }
     }
 }

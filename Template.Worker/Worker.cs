@@ -20,7 +20,7 @@ namespace Template.Worker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                Log.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                Log.LogInformation("Worker running at: {Time}", DateTimeOffset.Now);
                 await Task.Delay(1000, stoppingToken);
             }
         }

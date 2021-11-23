@@ -1,30 +1,22 @@
-namespace Template.Worker;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+//namespace Template.Worker;using Template.Worker;
 
 using Serilog;
 
-public static class Program
-{
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
-    }
+using Template.Worker;
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureLogging((_, logging) =>
-            {
-                logging.ClearProviders();
-            })
-            .UseSerilog((hostingContext, loggerConfiguration) =>
-            {
-                loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
-            })
-            .ConfigureServices((_, services) =>
-            {
-                services.AddHostedService<Worker>();
-            });
-}
+var host = Host.CreateDefaultBuilder(args)
+    .ConfigureLogging((_, logging) =>
+    {
+        logging.ClearProviders();
+    })
+    .UseSerilog((hostingContext, loggerConfiguration) =>
+    {
+        loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+    })
+    .ConfigureServices(services =>
+    {
+        services.AddHostedService<Worker>();
+    })
+    .Build();
+
+await host.RunAsync();

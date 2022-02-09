@@ -1,8 +1,8 @@
-//namespace Template.Worker;using Template.Worker;
-
 using Serilog;
 
 using Template.Worker;
+
+#pragma warning disable CA1812
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging((_, logging) =>

@@ -1,1 +1,1 @@
-# template-server-worker
+# Template project for Worker
